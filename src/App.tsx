@@ -17,16 +17,18 @@ function App() {
   const [isEntered, setIsEntered] = useState(false);
 
   return (
-    <Container maxWidth="sm">
-      
-      <Header />
+    <div>
+      <Container maxWidth="sm">
 
-      <Routes>
-        <Route index element={[<ChannelInfo />, <Rewards />]} />
-        <Route path={'/create'} element={<Create />} />
-      </Routes>
+        <Header /> 
 
-    </Container>
+        <Routes>
+          <Route index element={[<ChannelInfo />, <Rewards />]} />
+          <Route path={'/create'} element={<Create />} />
+        </Routes>
+
+      </Container>
+    </div>
   );
 }
 
