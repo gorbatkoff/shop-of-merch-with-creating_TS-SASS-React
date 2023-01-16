@@ -1,0 +1,21 @@
+$blue-color: #0034BB;
+
+.reward {
+    padding: 42px 30px;
+    gap: 10px;
+    width: 191px;
+    height: 257px;
+    border: 2px dashed $blue-color;
+    border-radius: 10px;
+    text-align: center;
+
+    p{
+        font-weight: bold;
+        color: $blue-color;
+    }
+
+    svg{
+        color: $blue-color;
+        margin-top: 30%;
+    }
+}
