@@ -36,11 +36,11 @@ function Create({ }: Props) {
         <p>Максимум 1 000 000</p>
       </div>
 
-
-      <br />
+      <h4>Вид доставки</h4>
       <input {...register("kindOfDelivery", { required: true })} type="radio" value="virtual" id='kindOfDelivery' />
-
       <input {...register("kindOfDelivery", { required: true })} type="radio" value="offline" id='kindOfDelivery' />
+
+      <h4>Тип вознаграждения</h4>
 
       <select {...register("typeOfDelivery", { required: true })}>
         <option value="image" key={1}>Изображение</option>
