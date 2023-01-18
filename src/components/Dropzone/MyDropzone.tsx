@@ -59,9 +59,9 @@ export default function MyDropzone() {
                 :
                 isDragActive
                     ?
-                    <center><h3>Отпустите файл прямо здесь!</h3></center>
+                    <center><h3 style={{color: "#0034BB"}}>Отпустите файл прямо здесь!</h3></center>
                     :
-                    <center><h3>Нажмите здесь чтоб выбрать файл или перенесите его прямо сюда!</h3></center>
+                    <center><h3 style={{color: "#0034BB"}}>Нажмите здесь чтоб выбрать файл или перенесите его прямо сюда!</h3></center>
             }
         </div>
     )
