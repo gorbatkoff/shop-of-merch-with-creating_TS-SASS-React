@@ -8,6 +8,7 @@ import UserIcon from '../../Images/UserIcon.svg';
 
 import styles from './Create.module.scss';
 import MyDropzone from '../Dropzone/MyDropzone';
+import Reward from './Reward/Reward';
 
 type FormValues = {
   nameOfReward: string;
@@ -23,7 +24,7 @@ type FormValues = {
 type Props = {}
 
 function Create({ }: Props) {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = data => console.log(data);
   console.log(errors)
 
@@ -42,7 +43,7 @@ function Create({ }: Props) {
         <input {...register('price', { required: true, max: 1000000, min: 0 })} id="price" type="number" style={{ width: "20%" }} />
         <p>Максимум 1 000 000</p>
       </div>
-      Radio
+
       <h3>Вид доставки</h3>
       <Radio {...register("kindOfDelivery", { required: true })} value="virtual" id='kindOfDelivery' />
       <label htmlFor="kindOfDelivery">Виртуальная доставка</label>
@@ -63,7 +64,8 @@ function Create({ }: Props) {
 
       <h3>Вознаграждение</h3>
 
-      
+      <Reward reward={watch("typeOfDelivery")}/>
+
 
       <h3>Примечание для пользователей</h3>
 
