@@ -28,9 +28,7 @@ const handleAuth = (user: any) => {
 
         <Header /> 
 
-        <TelegramWidget onAuth={function (user: any): void {
-          throw new Error('Function not implemented.');
-        } } />
+        <TelegramWidget onAuth={handleAuth} />
 
         {/* <Routes>
           <Route index element={[<ChannelInfo />, <Rewards />]} />
