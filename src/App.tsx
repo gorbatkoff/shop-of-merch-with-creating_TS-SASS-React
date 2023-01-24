@@ -12,19 +12,30 @@ import EnterWithTelegram from './components/EnterWithTelegram/EnterWithTelegram'
 import Create from './components/Create/Create';
 
 import './App.scss';
+import TelegramWidget from './components/TelegramAuthButton/TelegramWidget';
 
 function App() {
 
+const handleAuth = (user: any) => {
+  alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
+}
+
+
   return (
+
     <div>
       <Container maxWidth="sm">
 
         <Header /> 
 
-        <Routes>
+        <TelegramWidget onAuth={function (user: any): void {
+          throw new Error('Function not implemented.');
+        } } />
+
+        {/* <Routes>
           <Route index element={[<ChannelInfo />, <Rewards />]} />
           <Route path={'/create'} element={<Create />} />
-        </Routes>
+        </Routes> */}
 
       </Container>
     </div>
