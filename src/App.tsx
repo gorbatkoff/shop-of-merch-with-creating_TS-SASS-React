@@ -9,12 +9,11 @@ import Rewards from './components/Rewards/Rewards';
 import ChannelInfo from './components/ChannelInfo/ChannelInfo';
 import EnterWithTelegram from './components/EnterWithTelegram/EnterWithTelegram';
 
-import './App.scss';
 import Create from './components/Create/Create';
 
-function App() {
+import './App.scss';
 
-  const [isEntered, setIsEntered] = useState(false);
+function App() {
 
   return (
     <div>
@@ -33,15 +32,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-{/* {!isEntered ? <EnterWithTelegram setIsEntered={setIsEntered}/> : <h2>not hello</h2>} */ }

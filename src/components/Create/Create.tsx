@@ -54,19 +54,6 @@ function Create({ }: Props) {
 
       <Title header="Вид доставки" title="Укажите тип доставки, где виртуальная — через интернет (видео или аудиозаписи), где оффлайн — доставка почтой до дома получателя." />
 
-      {/* <div style={{ display: 'flex', alignItems: "center", justifyContent: "space-between", width: "100%" }}>
-        <div>
-          <Radio {...register("kindOfDelivery", { required: true })} value="virtual"  />
-          <input {...register("developer", { required: true })} type="radio" value="virtual" id='kindOfDelivery' />
-          <label htmlFor="kindOfDelivery">Виртуальная доставка</label>
-        </div>
-        <div>
-          <Radio {...register("kindOfDelivery", { required: true })} value="offline" id='kindOfDelivery' />
-          <input {...register("developer", { required: true })} type="radio" value="offline" id='kindOfDelivery' />
-          <label htmlFor="kindOfDelivery">Оффлайн доставка</label>
-        </div>
-      </div> */}
-
       <FormControl>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
