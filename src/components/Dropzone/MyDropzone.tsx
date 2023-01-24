@@ -11,8 +11,8 @@ export default function MyDropzone() {
     let imageUrl = 'url(' + img + ')';
 
     const styles = {
-        height: "40vh",
-        width: "80%",
+        height: "400px",
+        width: "400px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
