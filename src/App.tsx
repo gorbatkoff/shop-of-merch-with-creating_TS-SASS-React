@@ -17,7 +17,7 @@ import TelegramWidget from './components/TelegramAuthButton/TelegramWidget';
 function App() {
 
   const handleAuth = (user: any) => {
-    alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
+    alert('Logged!');
   }
 
   return (
