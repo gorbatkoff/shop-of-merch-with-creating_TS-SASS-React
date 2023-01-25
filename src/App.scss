@@ -72,3 +72,12 @@ textarea,
 select {
   font: inherit;
 }
+
+.tgme_widget_login{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 25% auto;
+  text-align: center;
+  width: fit-content
+}
