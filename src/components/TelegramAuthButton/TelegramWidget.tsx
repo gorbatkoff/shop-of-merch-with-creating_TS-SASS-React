@@ -23,9 +23,8 @@ const TelegramAuth: React.FC = () => {
     // Функция для обработки результата авторизации
     window.onTelegramAuth = (user: any) => {
         console.log('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
-        localStorage.setItem('test', "1");
-        localStorage.setItem('test2', "2");
       };
+      localStorage.setItem('isLogin', "true");
   }, []);
 
   return <div>Кнопка авторизации через Telegram будет отображена здесь</div>
