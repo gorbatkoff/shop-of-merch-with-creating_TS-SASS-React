@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 
-interface TelegramWidgetProps {
-    onAuth: (user: any) => void;
+function onTelegramAuth(user: { first_name: string; last_name: string; id: string; username: string; }) {
+    alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
 }
 
-const TelegramWidget: React.FC<TelegramWidgetProps> = ({ onAuth }) => {
+const TelegramWidget: React.FC = () => {
     useEffect(() => {
         const script = document.createElement('script');
         script.async = true;
@@ -12,7 +12,7 @@ const TelegramWidget: React.FC<TelegramWidgetProps> = ({ onAuth }) => {
         script.setAttribute('data-telegram-login', 'subs_web_app_bot');
         script.setAttribute('data-size', 'large');
         script.setAttribute('data-radius', '20');
-        script.setAttribute('data-onauth', `onTelegramAuth(${onAuth})`);
+        script.setAttribute('data-onauth', `onTelegramAuth(${onTelegramAuth})`);
         script.setAttribute('data-request-access', 'write');
         document.body.appendChild(script);
 

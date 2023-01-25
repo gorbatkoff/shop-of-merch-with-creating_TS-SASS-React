@@ -16,10 +16,6 @@ import TelegramWidget from './components/TelegramAuthButton/TelegramWidget';
 
 function App() {
 
-const handleAuth = (user: any) => {
-  alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
-}
-
 
   return (
 
@@ -28,7 +24,7 @@ const handleAuth = (user: any) => {
 
         <Header /> 
 
-        <TelegramWidget onAuth={handleAuth} />
+        <TelegramWidget />
 
         {/* <Routes>
           <Route index element={[<ChannelInfo />, <Rewards />]} />
