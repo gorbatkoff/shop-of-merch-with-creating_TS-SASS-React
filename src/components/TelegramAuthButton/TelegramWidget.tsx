@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
-import { User } from 'telegraf/typings/core/types/typegram';
 
 interface TelegramWidgetProps {
     onAuth: (user: any) => void;
 }
 
 const TelegramWidget: React.FC<TelegramWidgetProps> = ({ onAuth }) => {
-
     useEffect(() => {
         const script = document.createElement('script');
         script.async = true;
