@@ -1,6 +1,8 @@
 import React from 'react';
 
-import styles from './RewardByType.module.scss'
+import styles from './RewardByType.module.scss';
+
+import MyDropzone from '../../../Dropzone/MyDropzone';
 
 type Props = {}
 

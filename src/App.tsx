@@ -7,7 +7,6 @@ import { Container } from '@mui/system';
 import Header from './components/Header/Header';
 import Rewards from './components/Rewards/Rewards';
 import ChannelInfo from './components/ChannelInfo/ChannelInfo';
-import EnterWithTelegram from './components/EnterWithTelegram/EnterWithTelegram';
 
 import Create from './components/Create/Create';
 
@@ -15,16 +14,6 @@ import './App.scss';
 import TelegramWidget from './components/TelegramAuthButton/TelegramWidget';
 
 function App() {
-
-  const [userId, setUserId] = useState('');
-
-  useEffect(() => {
-    let temp = localStorage.getItem('userId');
-
-    if (temp) {
-      setUserId(temp);
-    }
-  }, [])
 
   return (
 
@@ -34,12 +23,8 @@ function App() {
         <Header />
 
         <Routes>
-          {!userId
-            ?
-            <Route index element={<TelegramWidget />} />
-            :
-            <Route index element={[<ChannelInfo />, <Rewards />]} />
-          }
+          <Route index element={<TelegramWidget />} />
+          <Route path={'/channel'} element={[<ChannelInfo />, <Rewards />]} />
           <Route path={'/create'} element={<Create />} />
         </Routes>
 

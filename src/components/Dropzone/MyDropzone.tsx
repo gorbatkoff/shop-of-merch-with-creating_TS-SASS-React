@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react'
-import { useDropzone } from 'react-dropzone'
 
-import Alert from '@mui/material/Alert';
+import { useDropzone } from 'react-dropzone'
 
 
 export default function MyDropzone() {
@@ -11,7 +10,7 @@ export default function MyDropzone() {
     let imageUrl = 'url(' + img + ')';
 
     const styles = {
-        height: "400px",
+        height: "300px",
         width: "400px",
         display: "flex",
         justifyContent: "center",

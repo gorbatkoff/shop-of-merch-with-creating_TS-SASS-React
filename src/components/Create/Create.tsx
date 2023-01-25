@@ -101,7 +101,7 @@ function Create({ }: Props) {
         </RadioGroup>
       </FormControl>
       <br />
-      <input type="submit" />
+      <input type="submit" style={{cursor: 'pointer'}} />
     </form>
   )
 }
