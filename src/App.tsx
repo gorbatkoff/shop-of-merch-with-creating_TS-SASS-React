@@ -24,13 +24,13 @@ function App() {
 
         <Header />
 
-
         <Routes>
-          {localStorage.getItem('userTgId')
+          {!localStorage.getItem('userTgId')
             ?
             <Route index element={<TelegramWidget />} />
             :
-            <Route index element={[<ChannelInfo />, <Rewards />]} />
+            <Route index element={<TelegramWidget />} />
+            // <Route index element={[<ChannelInfo />, <Rewards />]} />
           }
           <Route path={'/create'} element={<Create />} />
         </Routes>
