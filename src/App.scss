@@ -1,10 +1,10 @@
 *,
 *::before,
 *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Roboto";
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto";
 }
 
 a {
@@ -61,7 +61,7 @@ img {
 }
 
 /* Указываем понятную периодичность в потоке данных у article*/
-article > * + * {
+article>*+* {
   margin-top: 1em;
 }
 
@@ -73,11 +73,12 @@ select {
   font: inherit;
 }
 
-.tgme_widget_login{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 25% auto;
-  text-align: center;
-  width: fit-content
+
+#widget_login {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 25% auto !important;
+  text-align: center !important;
+  width: fit-content !important;
 }
