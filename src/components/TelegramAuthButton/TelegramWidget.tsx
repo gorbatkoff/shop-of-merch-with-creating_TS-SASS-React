@@ -13,7 +13,7 @@ const TelegramWidget: React.FC = () => {
         script.setAttribute('data-telegram-login', 'subs_web_app_bot');
         script.setAttribute('data-size', 'large');
         script.setAttribute('data-radius', '20');
-        script.setAttribute('data-onauth', `${onTelegramAuth()}`);
+        script.setAttribute('data-onauth', `${onTelegramAuth}`);
         script.setAttribute('data-request-access', 'write');
         document.body.appendChild(script);
 
