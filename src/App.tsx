@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Routes, Route } from 'react-router-dom';
 
@@ -16,6 +16,15 @@ import TelegramWidget from './components/TelegramAuthButton/TelegramWidget';
 
 function App() {
 
+  const [userId, setUserId] = useState('');
+
+  useEffect(() => {
+    let temp = localStorage.getItem('userId');
+
+    if (temp) {
+      setUserId(temp);
+    }
+  }, [])
 
   return (
 
@@ -25,7 +34,7 @@ function App() {
         <Header />
 
         <Routes>
-          {!localStorage.getItem('isLogin')
+          {!userId
             ?
             <Route index element={<TelegramWidget />} />
             :
