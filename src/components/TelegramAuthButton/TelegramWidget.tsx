@@ -23,7 +23,8 @@ const TelegramAuth: React.FC = () => {
     // Функция для обработки результата авторизации
     window.onTelegramAuth = (user: any) => {
         console.log('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
-        // Здесь вы можете добавить дополнительную логику для аутентификации и сохранения информации о пользователе
+        localStorage.setItem('userTgId', user.id);
+        localStorage.setItem('userTgUsername', user.username);
       };
   }, []);
 

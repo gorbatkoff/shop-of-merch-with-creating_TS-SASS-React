@@ -22,14 +22,18 @@ function App() {
     <div>
       <Container maxWidth="sm">
 
-        <Header /> 
+        <Header />
 
-        <TelegramWidget />
 
-        {/* <Routes>
-          <Route index element={[<ChannelInfo />, <Rewards />]} />
+        <Routes>
+          {localStorage.getItem('userTgId')
+            ?
+            <Route index element={<TelegramWidget />} />
+            :
+            <Route index element={[<ChannelInfo />, <Rewards />]} />
+          }
           <Route path={'/create'} element={<Create />} />
-        </Routes> */}
+        </Routes>
 
       </Container>
     </div>
