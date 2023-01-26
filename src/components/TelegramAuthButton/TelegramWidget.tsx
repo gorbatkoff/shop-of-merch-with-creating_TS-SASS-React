@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const botUsername = 'subs_web_app_bot';
+const botUsername = 'OhMySubsBot';
 
 declare global {
     interface Window {
