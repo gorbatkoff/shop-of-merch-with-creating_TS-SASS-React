@@ -22,8 +22,9 @@ const TelegramAuth: React.FC = () => {
 
         // Функция для обработки результата авторизации
         window.onTelegramAuth = (user: any) => {
-            console.log('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
-            window.location.href="./channel"
+            console.log(user)
+            // console.log('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
+            // window.location.href="./channel"
         };
     }, []);
 
