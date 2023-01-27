@@ -15,16 +15,19 @@ import Title from '../UI/Title';
 import Reward from './Reward/Reward';
 import styles from './Create.module.scss';
 import MyDropzone from '../Dropzone/MyDropzone';
+import Checkbox from '@mui/material/Checkbox';
 
 type FormValues = {
   nameOfReward: string;
   price: number;
   kindOfDelivery: string;
   typeOfDelivery: string;
-  isHaveSizeRange: boolean;
+  isHaveSizeRange: string;
   isHaveDivisionByGender: boolean;
   note: string;
   isPrivate: boolean;
+  countOfItems: number;
+  sizes: Array<string>
 };
 
 type Props = {}
@@ -32,7 +35,6 @@ type Props = {}
 function Create({ }: Props) {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = data => console.log(data);
-  console.log(errors)
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -57,13 +59,59 @@ function Create({ }: Props) {
       <FormControl>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="female"
+          defaultValue="virtual"
           name="radio-buttons-group"
         >
           <FormControlLabel {...register("kindOfDelivery", { required: true })} value="virtual" control={<Radio />} label="Виртуальная доставка" />
           <FormControlLabel {...register("kindOfDelivery", { required: true })} value="offline" control={<Radio />} label="Офлайн доставка" />
         </RadioGroup>
       </FormControl>
+
+      {watch('kindOfDelivery') === "offline"
+        ?
+        <>
+          <Title header="У вознаграждения есть размерный ряд?" title="Есть ли у вознаграждения модельный ряд? Если Нет — ваш товар унисекс, если Да — укажите это :)" />
+
+          <FormControl>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue={true}
+              name="radio-buttons-group"
+            >
+              <FormControlLabel {...register("isHaveSizeRange", { required: true })} value="No" control={<Radio />} label="Нет (единый размер)" />
+              <FormControlLabel {...register("isHaveSizeRange", { required: true })} value="Yes" control={<Radio />} label="Да" />
+            </RadioGroup>
+          </FormControl>
+        </>
+        :
+        <></>
+      }
+
+      {watch('isHaveSizeRange') === "Yes"
+        ?
+        <>
+          <Title header="Отметьте доступный размерный ряд" title="" />
+
+          <FormControl>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              name="radio-buttons-group"
+              style={{display: "grid", gridTemplateColumns: "repeat(4, 25%)", justifyContent: "space-between", width: "400px"}}
+            >
+              <FormControlLabel {...register("sizes", { required: true })} value="XXXL" control={<Checkbox />} label="XXXL" />
+              <FormControlLabel {...register("sizes", { required: true })} value="XXL" control={<Checkbox />} label="XXL" />
+              <FormControlLabel {...register("sizes", { required: true })} value="XL" control={<Checkbox />} label="XL" />
+              <FormControlLabel {...register("sizes", { required: true })} value="L" control={<Checkbox />} label="L" />
+              <FormControlLabel {...register("sizes", { required: true })} value="M" control={<Checkbox />} label="M" />
+              <FormControlLabel {...register("sizes", { required: true })} value="S" control={<Checkbox />} label="S" />
+              <FormControlLabel {...register("sizes", { required: true })} value="XS" control={<Checkbox />} label="XS" />
+              <FormControlLabel {...register("sizes", { required: true })} value="XXS" control={<Checkbox />} label="XXS" />
+            </RadioGroup>
+          </FormControl>
+        </>
+        :
+        <></>
+      }
 
       <Title header="Тип вознаграждения" title="Тип вознаграждения — это то, что получит пользователь после оплаты товара: ссылка, аудио, текст. Где кастомизированный — это товар (мерч) который отправляется до получателя (кроссовки, худи, толстовка, предмет)" />
 
@@ -79,6 +127,9 @@ function Create({ }: Props) {
 
       <Reward reward={watch("typeOfDelivery")} />
 
+      <Title header="Укажите количество товара" title="Пожалуйста, укажите количество единиц вашего товара. После достижения ограничения по выдаче товар будет помечен как неактивный." />
+
+      <input {...register("countOfItems")} type="number" id="nameOfReward" placeholder='Количество товаров ед.' />
 
       <Title header="Примечание для пользователя" title="Примечание — это сообщение, которое получит пользователь после покупки товара. Например благодарность или просьба сообщить адрес доставки. " />
 
@@ -96,12 +147,12 @@ function Create({ }: Props) {
           defaultValue="female"
           name="radio-buttons-group"
         >
-          <FormControlLabel {...register("isPrivate", { required: true })} value="true" control={<Radio />} label="Черновик (видите только вы)" />
-          <FormControlLabel {...register("isPrivate", { required: true })} value="false" control={<Radio />} label="Опубликовать" />
+          <FormControlLabel {...register("isPrivate", { required: true })} value={true} control={<Radio />} label="Черновик (видите только вы)" />
+          <FormControlLabel {...register("isPrivate", { required: true })} value={false} control={<Radio />} label="Опубликовать" />
         </RadioGroup>
       </FormControl>
       <br />
-      <input type="submit" style={{cursor: 'pointer'}} />
+      <input type="submit" style={{ cursor: 'pointer' }} />
     </form>
   )
 }
