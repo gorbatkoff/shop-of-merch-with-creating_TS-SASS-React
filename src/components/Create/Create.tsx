@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useForm, SubmitHandler } from "react-hook-form";
+
+import { ErrorMessage } from "@hookform/error-message";
 
 import UserIcon from '../../Images/UserIcon.svg';
 
@@ -27,7 +29,9 @@ type FormValues = {
   note: string;
   isPrivate: boolean;
   countOfItems: number;
-  sizes: Array<string>
+  isDivisionByGender: string;
+  sizes: Array<string>;
+  singleErrorInput: string
 };
 
 type Props = {}
@@ -36,6 +40,8 @@ function Create({ }: Props) {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = data => console.log(data);
 
+  console.log(errors)
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
 
@@ -43,29 +49,46 @@ function Create({ }: Props) {
 
       <Title header="Название вознаграждения" title="Введите название вознаграждения отражающее то, что получит пользователь" />
 
-      <input {...register("nameOfReward")} type="text" id="nameOfReward" placeholder='Худи с красивой надписью' />
+      <input {...register("nameOfReward", { required: "* Поле с названием обязательно!" })} type="text" id="nameOfReward" placeholder='Худи с красивой надписью' />
+
+      <ErrorMessage
+        errors={errors}
+        name="nameOfReward"
+        render={({ message }) => <p className={styles.warning}>{message}</p>}
+      />
 
       <Title header="Цена в количестве приведённых пользователей" title="Введите цену исходя из того, что 1 приведённый пользователь = 1 монета" />
 
 
       <div className={styles.referral}>
         <img src={UserIcon} alt="" />
-        <input {...register('price', { required: true, max: 1000000, min: 0 })} id="price" type="number" style={{ width: "35%" }} placeholder='1 000' />
+        <input {...register('price', { required: "* Укажите цену в количестве приведённых пользователей.", max: 1000000, min: 1 })} id="price" type="number" style={{ width: "35%" }} placeholder='1 000' />
         <p>Максимум 1 000 000</p>
       </div>
+
+      <ErrorMessage
+        errors={errors}
+        name="price"
+        render={({ message }) => <p className={styles.warning}>{message}</p>}
+      />
 
       <Title header="Вид доставки" title="Укажите тип доставки, где виртуальная — через интернет (видео или аудиозаписи), где оффлайн — доставка почтой до дома получателя." />
 
       <FormControl>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="virtual"
           name="radio-buttons-group"
         >
-          <FormControlLabel {...register("kindOfDelivery", { required: true })} value="virtual" control={<Radio />} label="Виртуальная доставка" />
-          <FormControlLabel {...register("kindOfDelivery", { required: true })} value="offline" control={<Radio />} label="Офлайн доставка" />
+          <FormControlLabel {...register("kindOfDelivery", { required: "* Выберите тип доставки" })} value="virtual" control={<Radio />} label="Виртуальная доставка" />
+          <FormControlLabel {...register("kindOfDelivery", { required: "* Выберите тип доставки" })} value="offline" control={<Radio />} label="Офлайн доставка" />
         </RadioGroup>
       </FormControl>
+
+      <ErrorMessage
+        errors={errors}
+        name="kindOfDelivery"
+        render={({ message }) => <p className={styles.warning}>{message}</p>}
+      />
 
       {watch('kindOfDelivery') === "offline"
         ?
@@ -84,7 +107,26 @@ function Create({ }: Props) {
           </FormControl>
         </>
         :
-        <></>
+        watch('kindOfDelivery') === "virtual" ?
+          <>
+            <Title header="Тип вознаграждения" title="Тип вознаграждения — это то, что получит пользователь после оплаты товара: ссылка, аудио, текст. Где кастомизированный — это товар (мерч) который отправляется до получателя (кроссовки, худи, толстовка, предмет)" />
+
+            <select {...register("typeOfDelivery", { required: true })} className={styles.select}>
+              <option value="image" key={1}>Изображение</option>
+              <option value="video" key={2}>Видеофайл</option>
+              <option value="audio" key={3}>Аудиофайл</option>
+              <option value="file" key={4}>Файл</option>
+              <option value="link" key={5}>Ссылка</option>
+              <option value="text" key={6}>Текстовая строка</option>
+              <option value="custom" key={7}>Кастомизированный (обязательства)</option>
+            </select>
+
+            <Reward reward={watch("typeOfDelivery")} />
+          </>
+
+          :
+
+          <></>
       }
 
       {watch('isHaveSizeRange') === "Yes"
@@ -96,16 +138,36 @@ function Create({ }: Props) {
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
               name="radio-buttons-group"
-              style={{display: "grid", gridTemplateColumns: "repeat(4, 25%)", justifyContent: "space-between", width: "400px"}}
+              style={{ display: "grid", gridTemplateColumns: "repeat(4, 25%)", justifyContent: "space-between", width: "400px" }}
             >
-              <FormControlLabel {...register("sizes", { required: true })} value="XXXL" control={<Checkbox />} label="XXXL" />
-              <FormControlLabel {...register("sizes", { required: true })} value="XXL" control={<Checkbox />} label="XXL" />
-              <FormControlLabel {...register("sizes", { required: true })} value="XL" control={<Checkbox />} label="XL" />
-              <FormControlLabel {...register("sizes", { required: true })} value="L" control={<Checkbox />} label="L" />
-              <FormControlLabel {...register("sizes", { required: true })} value="M" control={<Checkbox />} label="M" />
-              <FormControlLabel {...register("sizes", { required: true })} value="S" control={<Checkbox />} label="S" />
-              <FormControlLabel {...register("sizes", { required: true })} value="XS" control={<Checkbox />} label="XS" />
-              <FormControlLabel {...register("sizes", { required: true })} value="XXS" control={<Checkbox />} label="XXS" />
+              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XXXL" control={<Checkbox />} label="XXXL" />
+              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XXL" control={<Checkbox />} label="XXL" />
+              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XL" control={<Checkbox />} label="XL" />
+              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="L" control={<Checkbox />} label="L" />
+              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="M" control={<Checkbox />} label="M" />
+              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="S" control={<Checkbox />} label="S" />
+              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XS" control={<Checkbox />} label="XS" />
+              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XXS" control={<Checkbox />} label="XXS" />
+            </RadioGroup>
+          </FormControl>
+
+          <ErrorMessage
+            errors={errors}
+            name="sizes"
+            render={({ message }) => <p className={styles.warning}>{message}</p>}
+          />
+
+
+          <Title header="Есть ли деление на мужской и женский?" title="Есть ли у вознаграждения модельный ряд? Если Нет — ваш товар унисекс, если Да — укажите это :)" />
+
+          <FormControl>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue={"Yes"}
+              name="radio-buttons-group"
+            >
+              <FormControlLabel {...register("isDivisionByGender", { required: true })} value="No" control={<Radio />} label="Нет (Унисекс или не требуется)" />
+              <FormControlLabel {...register("isDivisionByGender", { required: true })} value="Yes" control={<Radio />} label="Да (Мужской или женский)" />
             </RadioGroup>
           </FormControl>
         </>
@@ -113,23 +175,10 @@ function Create({ }: Props) {
         <></>
       }
 
-      <Title header="Тип вознаграждения" title="Тип вознаграждения — это то, что получит пользователь после оплаты товара: ссылка, аудио, текст. Где кастомизированный — это товар (мерч) который отправляется до получателя (кроссовки, худи, толстовка, предмет)" />
-
-      <select {...register("typeOfDelivery", { required: true })} className={styles.select}>
-        <option value="image" key={1}>Изображение</option>
-        <option value="video" key={2}>Видеофайл</option>
-        <option value="audio" key={3}>Аудиофайл</option>
-        <option value="file" key={4}>Файл</option>
-        <option value="link" key={5}>Ссылка</option>
-        <option value="text" key={6}>Текстовая строка</option>
-        <option value="custom" key={7}>Кастомизированный (обязательства)</option>
-      </select>
-
-      <Reward reward={watch("typeOfDelivery")} />
-
       <Title header="Укажите количество товара" title="Пожалуйста, укажите количество единиц вашего товара. После достижения ограничения по выдаче товар будет помечен как неактивный." />
 
-      <input {...register("countOfItems")} type="number" id="nameOfReward" placeholder='Количество товаров ед.' />
+      <input {...register("countOfItems")} type="number" id="nameOfReward" placeholder='Количество товаров ед. (необязательно)' />
+
 
       <Title header="Примечание для пользователя" title="Примечание — это сообщение, которое получит пользователь после покупки товара. Например благодарность или просьба сообщить адрес доставки. " />
 
@@ -147,10 +196,17 @@ function Create({ }: Props) {
           defaultValue="female"
           name="radio-buttons-group"
         >
-          <FormControlLabel {...register("isPrivate", { required: true })} value={true} control={<Radio />} label="Черновик (видите только вы)" />
-          <FormControlLabel {...register("isPrivate", { required: true })} value={false} control={<Radio />} label="Опубликовать" />
+          <FormControlLabel {...register("isPrivate", { required: "* Уточните, куда направить товар?" })} value={true} control={<Radio />} label="Черновик (видите только вы)" />
+          <FormControlLabel {...register("isPrivate", { required: "* Уточните, куда направить товар?" })} value={false} control={<Radio />} label="Опубликовать" />
         </RadioGroup>
       </FormControl>
+
+      <ErrorMessage
+        errors={errors}
+        name="isPrivate"
+        render={({ message }) => <p className={styles.warning}>{message}</p>}
+      />
+
       <br />
       <input type="submit" style={{ cursor: 'pointer' }} />
     </form>
