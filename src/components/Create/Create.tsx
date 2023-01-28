@@ -47,7 +47,7 @@ function Create({ }: Props) {
 
       <MyDropzone />
 
-      <Title header="Название вознаграждения" title="Введите название вознаграждения отражающее то, что получит пользователь" />
+      <Title header="Название вознаграждения" title="Введите название вознаграждения, отражающее то, что получит пользователь" />
 
       <input {...register("nameOfReward", { required: "* Поле с названием обязательно!" })} type="text" id="nameOfReward" placeholder='Худи с красивой надписью' />
 
@@ -72,7 +72,7 @@ function Create({ }: Props) {
         render={({ message }) => <p className={styles.warning}>{message}</p>}
       />
 
-      <Title header="Вид доставки" title="Укажите тип доставки, где виртуальная — через интернет (видео или аудиозаписи), где оффлайн — доставка почтой до дома получателя." />
+      <Title header="Вид доставки" title="Укажите вид доставки, где виртуальная — через интернет (видео или аудиозаписи), где оффлайн — доставка почтой до дома получателя." />
 
       <FormControl>
         <RadioGroup
@@ -93,7 +93,7 @@ function Create({ }: Props) {
       {watch('kindOfDelivery') === "offline"
         ?
         <>
-          <Title header="У вознаграждения есть размерный ряд?" title="Есть ли у вознаграждения модельный ряд? Если Нет — ваш товар унисекс, если Да — укажите это :)" />
+          <Title header="У вознаграждения есть размерный ряд?" title="Есть ли у вознаграждения размерный ряд? Если Нет — ваш товар унисекс, если Да, пожалуйста, — укажите это." />
 
           <FormControl>
             <RadioGroup
@@ -158,7 +158,7 @@ function Create({ }: Props) {
           />
 
 
-          <Title header="Есть ли деление на мужской и женский?" title="Есть ли у вознаграждения модельный ряд? Если Нет — ваш товар унисекс, если Да — укажите это :)" />
+          <Title header="Есть ли деление на мужской и женский?" title="Укажите, пожалуйста, к какому гендеру относится ваш товар." />
 
           <FormControl>
             <RadioGroup
@@ -193,7 +193,7 @@ function Create({ }: Props) {
       <FormControl>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="female"
+          defaultValue="true"
           name="radio-buttons-group"
         >
           <FormControlLabel {...register("isPrivate", { required: "* Уточните, куда направить товар?" })} value={true} control={<Radio />} label="Черновик (видите только вы)" />
