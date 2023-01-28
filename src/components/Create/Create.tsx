@@ -25,9 +25,9 @@ type FormValues = {
   kindOfDelivery: string;
   typeOfDelivery: string;
   isHaveSizeRange: string;
-  isHaveDivisionByGender: boolean;
+  isHaveDivisionByGender: string;
   note: string;
-  isPrivate: boolean;
+  isPrivate: string;
   countOfItems: number;
   isDivisionByGender: string;
   sizes: Array<string>;
@@ -206,7 +206,6 @@ function Create({ }: Props) {
         name="isPrivate"
         render={({ message }) => <p className={styles.warning}>{message}</p>}
       />
-
       <br />
       <input type="submit" style={{ cursor: 'pointer' }} />
     </form>
