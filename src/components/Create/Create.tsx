@@ -35,6 +35,8 @@ type FormValues = {
   sizes: Array<string>;
   singleErrorInput: string;
   isHaveDeadline: string;
+  deadlineTime: Date;
+  isHaveCountOfItems: string;
 };
 
 type Props = {}
@@ -142,13 +144,18 @@ function Create({ }: Props) {
               <FormControl>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue={"Yes"}
                   name="radio-buttons-group"
                 >
-                  <FormControlLabel {...register("isDivisionByGender", { required: true })} value="No" control={<Radio />} label="Нет (Унисекс или не требуется)" />
-                  <FormControlLabel {...register("isDivisionByGender", { required: true })} value="Yes" control={<Radio />} label="Да (Мужской или женский)" />
+                  <FormControlLabel {...register("isDivisionByGender", { required: '* Укажите, есть ли деление на М / Ж товар.' })} value="No" control={<Radio />} label="Нет (Унисекс или не требуется)" />
+                  <FormControlLabel {...register("isDivisionByGender", { required: '* Укажите, есть ли деление на М / Ж товар.' })} value="Yes" control={<Radio />} label="Да (Мужской или женский)" />
                 </RadioGroup>
               </FormControl>
+
+              <ErrorMessage
+                errors={errors}
+                name="isDivisionByGender"
+                render={({ message }) => <p className={styles.warning}>{message}</p>}
+              />
             </>
             :
             <></>
@@ -177,14 +184,29 @@ function Create({ }: Props) {
           <></>
       }
 
-      <Title header="Укажите количество товара" title="Пожалуйста, укажите количество единиц вашего товара. После достижения ограничения по выдаче товар будет помечен как неактивный." />
+      <Title header="У товара есть количество?" title="Пожалуйста, укажите количество единиц вашего товара. После достижения ограничения по выдаче товар будет помечен как неактивный." />
 
+      <FormControl>
+        <RadioGroup
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue={"No"}
+          name="radio-buttons-group"
+        >
+          <FormControlLabel {...register("isHaveCountOfItems", { required: 'Выберите время жизни товара.' })} value="No" control={<Radio />} label="Количество неограничено" />
+          <FormControlLabel {...register("isHaveCountOfItems", { required: 'Выберите время жизни товара.' })} value="Yes" control={<Radio />} label="Указать количество" />
+        </RadioGroup>
+      </FormControl>
 
+      {watch('isHaveCountOfItems') === 'Yes'
+      ?
       <div className={styles.referral}>
-        <img src={Quanitity} alt="" />
-        <input {...register('countOfItems', { required: "* Укажите цену в количестве приведённых пользователей.", max: 1000000, min: 1 })} id="price" type="number" style={{ width: "35%" }} placeholder='1 000' />
-        <p>Максимум 1 000 000</p>
-      </div>
+      <img src={Quanitity} alt="" />
+      <input {...register('countOfItems', { required: "* Укажите цену в количестве приведённых пользователей.", max: 1000000, min: 1 })} id="price" type="number" style={{ width: "35%" }} placeholder='1 000' />
+      <p>Максимум 1 000 000</p>
+    </div>
+    :
+    <></>
+      }
 
       <Title header="Время жизни товара" title="Укажите, в какой день товар станет неактивным." />
 
@@ -194,21 +216,35 @@ function Create({ }: Props) {
           defaultValue={"No"}
           name="radio-buttons-group"
         >
-          <FormControlLabel {...register("isHaveDeadline", { required: true })} value="No" control={<Radio />} label="Бессрочный" />
-          <FormControlLabel {...register("isHaveDeadline", { required: true })} value="Yes" control={<Radio />} label="Указать срок" />
+          <FormControlLabel {...register("isHaveDeadline", { required: 'Выберите время жизни товара.' })} value="No" control={<Radio />} label="Бессрочный" />
+          <FormControlLabel {...register("isHaveDeadline", { required: 'Выберите время жизни товара.' })} value="Yes" control={<Radio />} label="Указать срок" />
         </RadioGroup>
       </FormControl>
+
+      <ErrorMessage
+        errors={errors}
+        name="isHaveDeadline"
+        render={({ message }) => <p className={styles.warning}>{message}</p>}
+      />
 
       <br />
 
       {
         watch('isHaveDeadline') === 'Yes'
           ?
-          <div className={styles.referral}>
-            <img src={Calendar} alt="" />
-            <input type="date" min={"2023:01:20"} />
-            <p>Выберите срок жизни товара</p>
-          </div>
+          <>
+            <div className={styles.referral}>
+              <img src={Calendar} alt="" />
+              <input type="date" min={"2023:01:20"} {...register("deadlineTime", { required: '* Укажите дату' })} />
+              <p>Выберите срок жизни товара</p>
+            </div>
+
+            <ErrorMessage
+              errors={errors}
+              name="deadlineTime"
+              render={({ message }) => <p className={styles.warning}>{message}</p>}
+            />
+          </>
           :
           <></>
       }
