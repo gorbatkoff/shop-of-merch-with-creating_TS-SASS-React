@@ -74,11 +74,10 @@ select {
 }
 
 
-#widget_login {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: 25% auto !important;
-  text-align: center !important;
-  width: fit-content !important;
+iframe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  margin: 25vh auto;
 }
