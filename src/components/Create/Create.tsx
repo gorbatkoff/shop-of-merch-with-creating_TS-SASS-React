@@ -105,6 +105,51 @@ function Create({ }: Props) {
               <FormControlLabel {...register("isHaveSizeRange", { required: true })} value="Yes" control={<Radio />} label="Да" />
             </RadioGroup>
           </FormControl>
+
+          {watch('isHaveSizeRange') === "Yes"
+            ?
+            <>
+              <Title header="Отметьте доступный размерный ряд" title="" />
+
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  name="radio-buttons-group"
+                  style={{ display: "grid", gridTemplateColumns: "repeat(4, 25%)", justifyContent: "space-between", width: "400px" }}
+                >
+                  <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XXXL" control={<Checkbox />} label="XXXL" />
+                  <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XXL" control={<Checkbox />} label="XXL" />
+                  <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XL" control={<Checkbox />} label="XL" />
+                  <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="L" control={<Checkbox />} label="L" />
+                  <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="M" control={<Checkbox />} label="M" />
+                  <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="S" control={<Checkbox />} label="S" />
+                  <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XS" control={<Checkbox />} label="XS" />
+                  <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XXS" control={<Checkbox />} label="XXS" />
+                </RadioGroup>
+              </FormControl>
+
+              <ErrorMessage
+                errors={errors}
+                name="sizes"
+                render={({ message }) => <p className={styles.warning}>{message}</p>}
+              />
+
+              <Title header="Есть ли деление на мужской и женский?" title="Укажите, пожалуйста, к какому гендеру относится ваш товар." />
+
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue={"Yes"}
+                  name="radio-buttons-group"
+                >
+                  <FormControlLabel {...register("isDivisionByGender", { required: true })} value="No" control={<Radio />} label="Нет (Унисекс или не требуется)" />
+                  <FormControlLabel {...register("isDivisionByGender", { required: true })} value="Yes" control={<Radio />} label="Да (Мужской или женский)" />
+                </RadioGroup>
+              </FormControl>
+            </>
+            :
+            <></>
+          }
         </>
         :
         watch('kindOfDelivery') === "virtual" ?
@@ -129,52 +174,6 @@ function Create({ }: Props) {
           <></>
       }
 
-      {watch('isHaveSizeRange') === "Yes"
-        ?
-        <>
-          <Title header="Отметьте доступный размерный ряд" title="" />
-
-          <FormControl>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              name="radio-buttons-group"
-              style={{ display: "grid", gridTemplateColumns: "repeat(4, 25%)", justifyContent: "space-between", width: "400px" }}
-            >
-              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XXXL" control={<Checkbox />} label="XXXL" />
-              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XXL" control={<Checkbox />} label="XXL" />
-              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XL" control={<Checkbox />} label="XL" />
-              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="L" control={<Checkbox />} label="L" />
-              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="M" control={<Checkbox />} label="M" />
-              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="S" control={<Checkbox />} label="S" />
-              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XS" control={<Checkbox />} label="XS" />
-              <FormControlLabel {...register("sizes", { required: '* Укажите размерный ряд' })} value="XXS" control={<Checkbox />} label="XXS" />
-            </RadioGroup>
-          </FormControl>
-
-          <ErrorMessage
-            errors={errors}
-            name="sizes"
-            render={({ message }) => <p className={styles.warning}>{message}</p>}
-          />
-
-
-          <Title header="Есть ли деление на мужской и женский?" title="Укажите, пожалуйста, к какому гендеру относится ваш товар." />
-
-          <FormControl>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={"Yes"}
-              name="radio-buttons-group"
-            >
-              <FormControlLabel {...register("isDivisionByGender", { required: true })} value="No" control={<Radio />} label="Нет (Унисекс или не требуется)" />
-              <FormControlLabel {...register("isDivisionByGender", { required: true })} value="Yes" control={<Radio />} label="Да (Мужской или женский)" />
-            </RadioGroup>
-          </FormControl>
-        </>
-        :
-        <></>
-      }
-
       <Title header="Укажите количество товара" title="Пожалуйста, укажите количество единиц вашего товара. После достижения ограничения по выдаче товар будет помечен как неактивный." />
 
       <input {...register("countOfItems")} type="number" id="nameOfReward" placeholder='Количество товаров ед. (необязательно)' />
@@ -186,18 +185,17 @@ function Create({ }: Props) {
       <p className={styles.paragraph}>
         Сообщение, которое пользователь увидит после обмена накопленных пользователей на вознаграждения. Например, инструкцию как получить</p>
 
-
       <textarea {...register("note")} className={styles.note} placeholder='Привет дорогой подписчик! Я очень благодарен тебе за твою помощь, скажи мне свой адрес доставки, чтоб я смог отправить тебе мой мерч :)'>
       </textarea>
 
       <FormControl>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="true"
+          defaultValue="No"
           name="radio-buttons-group"
         >
-          <FormControlLabel {...register("isPrivate", { required: "* Уточните, куда направить товар?" })} value={true} control={<Radio />} label="Черновик (видите только вы)" />
-          <FormControlLabel {...register("isPrivate", { required: "* Уточните, куда направить товар?" })} value={false} control={<Radio />} label="Опубликовать" />
+          <FormControlLabel {...register("isPrivate", { required: "* Уточните, куда направить товар?" })} value={'Yes'} control={<Radio />} label="Черновик (видите только вы)" />
+          <FormControlLabel {...register("isPrivate", { required: "* Уточните, куда направить товар?" })} value={'No'} control={<Radio />} label="Опубликовать" />
         </RadioGroup>
       </FormControl>
 
@@ -207,7 +205,9 @@ function Create({ }: Props) {
         render={({ message }) => <p className={styles.warning}>{message}</p>}
       />
       <br />
-      <input type="submit" style={{ cursor: 'pointer' }} />
+
+      <input type="submit" style={{ cursor: 'pointer', width: '80%' }} value={watch('isPrivate') === 'Yes' ? 'Сохранить в черновик' : 'Отправить'} />
+
     </form>
   )
 }
