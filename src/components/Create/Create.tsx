@@ -5,6 +5,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import UserIcon from '../../Images/UserIcon.svg';
+import Quanitity from '../../Images/Quanitity.svg';
+import Calendar from '../../Images/Calendar.svg';
 
 import Radio from '@mui/material/Radio';
 import FormLabel from '@mui/material/FormLabel';
@@ -31,7 +33,8 @@ type FormValues = {
   countOfItems: number;
   isDivisionByGender: string;
   sizes: Array<string>;
-  singleErrorInput: string
+  singleErrorInput: string;
+  isHaveDeadline: string;
 };
 
 type Props = {}
@@ -49,7 +52,7 @@ function Create({ }: Props) {
 
       <Title header="Название вознаграждения" title="Введите название вознаграждения, отражающее то, что получит пользователь" />
 
-      <input {...register("nameOfReward", { required: "* Поле с названием обязательно!" })} type="text" id="nameOfReward" placeholder='Худи с красивой надписью' />
+      <input {...register("nameOfReward", { required: "* Поле с названием обязательно." })} type="text" id="nameOfReward" placeholder='Худи с красивой надписью' />
 
       <ErrorMessage
         errors={errors}
@@ -176,7 +179,42 @@ function Create({ }: Props) {
 
       <Title header="Укажите количество товара" title="Пожалуйста, укажите количество единиц вашего товара. После достижения ограничения по выдаче товар будет помечен как неактивный." />
 
-      <input {...register("countOfItems")} type="number" id="nameOfReward" placeholder='Количество товаров ед. (необязательно)' />
+
+      <div className={styles.referral}>
+        <img src={Quanitity} alt="" />
+        <input {...register('countOfItems', { required: "* Укажите цену в количестве приведённых пользователей.", max: 1000000, min: 1 })} id="price" type="number" style={{ width: "35%" }} placeholder='1 000' />
+        <p>Максимум 1 000 000</p>
+      </div>
+
+      <Title header="Время жизни товара" title="Укажите, в какой день товар станет неактивным." />
+
+      <FormControl>
+        <RadioGroup
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue={"No"}
+          name="radio-buttons-group"
+        >
+          <FormControlLabel {...register("isHaveDeadline", { required: true })} value="No" control={<Radio />} label="Бессрочный" />
+          <FormControlLabel {...register("isHaveDeadline", { required: true })} value="Yes" control={<Radio />} label="Указать срок" />
+        </RadioGroup>
+      </FormControl>
+
+      <br />
+
+      {
+        watch('isHaveDeadline') === 'Yes'
+          ?
+          <div className={styles.referral}>
+            <img src={Calendar} alt="" />
+            <input type="date" min={"2023:01:20"} />
+            <p>Выберите срок жизни товара</p>
+          </div>
+          :
+          <></>
+      }
+
+
+      <br />
 
 
       <Title header="Примечание для пользователя" title="Примечание — это сообщение, которое получит пользователь после покупки товара. Например благодарность или просьба сообщить адрес доставки. " />
