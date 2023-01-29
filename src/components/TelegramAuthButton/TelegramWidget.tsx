@@ -15,7 +15,8 @@ const sendDataToApi = async (url: string) => {
     try {
         let request = await axios.get(API + url);
 
-        console.log(request);
+        window.location.href = './channel'
+        
     } catch (error) {
         console.log(error);
     }
