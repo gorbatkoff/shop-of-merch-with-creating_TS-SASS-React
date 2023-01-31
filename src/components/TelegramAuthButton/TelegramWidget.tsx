@@ -29,7 +29,7 @@ const TelegramAuth: React.FC = () => {
         script.src = 'https://telegram.org/js/telegram-widget.js?21';
         script.setAttribute('data-telegram-login', botUsername);
         script.setAttribute('data-size', 'large');
-        script.setAttribute('data-auth-url', 'http://45.130.43.98/api/auth/by_telegram/');
+        script.setAttribute('data-auth-url', 'http://45.130.43.98/auth/by_telegram/');
         // script.setAttribute('data-onauth', 'onTelegramAuth(user)');
         script.setAttribute('data-request-access', 'write');
         script.async = true;
