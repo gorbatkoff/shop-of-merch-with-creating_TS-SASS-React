@@ -9,7 +9,7 @@ declare global {
     }
 }
 
-const API = 'https://1cde-31-173-85-60.eu.ngrok.io/auth/by_telegram/';
+const API = 'http://45.130.43.98/auth/by_telegram/';
 
 const sendDataToApi = async (url: string) => {
     try {
