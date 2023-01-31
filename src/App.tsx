@@ -12,8 +12,26 @@ import Create from './components/Create/Create';
 
 import './App.scss';
 import TelegramWidget from './components/TelegramAuthButton/TelegramWidget';
+import axios from 'axios';
 
 function App() {
+
+  const [data, setData] = useState([]);
+
+  const getData = async () => {
+    try {
+      let request = await axios.post('http://45.130.43.98/api/reward/create/');
+
+      console.log(request);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   return (
 
