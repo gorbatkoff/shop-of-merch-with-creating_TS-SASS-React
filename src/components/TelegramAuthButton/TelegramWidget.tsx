@@ -9,7 +9,7 @@ declare global {
     }
 }
 
-const API = 'http://45.130.43.98/auth/by_ttelegram/';
+const API = 'http://45.130.43.98/auth/by_telegram/';
 
 const sendDataToApi = async (url: string) => {
     try {
